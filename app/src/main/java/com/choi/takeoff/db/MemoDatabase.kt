@@ -4,13 +4,16 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.choi.takeoff.db.dao.MemoDao
+import com.choi.takeoff.db.entity.Converters
 import com.choi.takeoff.db.entity.Memo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [Memo::class], version = 1)
+@TypeConverters(Converters::class)
+@Database(entities = [Memo::class], version = 1, exportSchema = false)
 abstract class MemoDatabase : RoomDatabase() {
     abstract fun memoDao(): MemoDao
 
