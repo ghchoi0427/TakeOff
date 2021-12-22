@@ -22,7 +22,7 @@ class MemoListAdapter : ListAdapter<Memo, MemoListAdapter.MemoViewHolder>(MemosC
     }
 
     class MemoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val memoItemView: TextView = itemView.findViewById(R.id.textView)
+        private val memoItemView: TextView = itemView.findViewById(R.id.textView_recycler)
 
         fun bind(text: String?) {
             memoItemView.text = text.toString()
