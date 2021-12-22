@@ -11,14 +11,14 @@ import java.util.*
 class Converters {
 
     @TypeConverter
-    fun toBitmap(bytes: ByteArray): Bitmap {
+    fun toBitmap(bytes: ByteArray): Bitmap? {
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
     }
 
     @TypeConverter
-    fun fromBitmap(bmp: Bitmap): ByteArray {
+    fun fromBitmap(bmp: Bitmap?): ByteArray {
         val outputStream = ByteArrayOutputStream()
-        bmp.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+        bmp?.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
         return outputStream.toByteArray()
     }
 
@@ -36,5 +36,5 @@ class Converters {
     fun listToJson(value: List<String>?): String = Gson().toJson(value)
 
     @TypeConverter
-    fun jsonToList(value: String) = Gson().fromJson(value, Array<String>::class.java).toList()
+    fun jsonToList(value: String?) = Gson().fromJson(value, Array<String>::class.java)?.toList()
 }
