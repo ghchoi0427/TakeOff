@@ -8,4 +8,6 @@
     <dimen name="big_padding">15dp</dimen>
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="button_horizontal_margin">5dp</dimen>
+    <dimen name="input_box_margin_bottom">120dp</dimen>
 </resources>
