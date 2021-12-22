@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface MemoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertMemos(vararg memos: Memo)
+    fun insertMemos(vararg memos: Memo?)
 
     @Update
     fun updateMemos(vararg memos: Memo)
@@ -15,10 +15,10 @@ interface MemoDao {
     @Delete
     fun deleteMemos(vararg memos: Memo)
 
-    @Query("SELECT * FROM memo")
+    @Query("SELECT *, rowid FROM memo")
     fun loadAllMemos(): Flow<List<Memo>>
 
     //TODO: fix this s**t
-    @Query("SELECT * FROM memo WHERE tags LIKE :search")
+    @Query("SELECT *, rowid FROM memo WHERE tags LIKE :search")
     fun findMemoWithTag(search: String): Flow<List<Memo>>
 }
