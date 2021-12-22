@@ -14,7 +14,7 @@ class NewMemoViewModel(private val repository: MemoRepository) : ViewModel() {
 
 }
 
-class MemoViewModelFactory(private val repository: MemoRepository) : ViewModelProvider.Factory {
+class NewMemoViewModelFactory(private val repository: MemoRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(NewMemoViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
