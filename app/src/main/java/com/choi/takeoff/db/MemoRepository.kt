@@ -14,4 +14,9 @@ class MemoRepository(private val memoDao: MemoDao) {
     suspend fun insert(memo: Memo) {
         memoDao.insertMemos(memo)
     }
+
+    @WorkerThread
+    fun select(rowId: Int): Memo {
+        return memoDao.findMemoWithId(rowId)
+    }
 }
