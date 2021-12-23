@@ -21,4 +21,7 @@ interface MemoDao {
     //TODO: fix this s**t
     @Query("SELECT *, rowid FROM memo WHERE tags LIKE :search")
     fun findMemoWithTag(search: String): Flow<List<Memo>>
+
+    @Query("SELECT *, rowid FROM memo WHERE rowid LIKE :search")
+    fun findMemoWithId(search: Int): Memo
 }
