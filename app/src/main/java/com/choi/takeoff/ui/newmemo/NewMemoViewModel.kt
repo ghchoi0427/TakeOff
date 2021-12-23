@@ -10,6 +10,8 @@ class NewMemoViewModel(private val repository: MemoRepository) : ViewModel() {
 
     val allMemos: LiveData<List<Memo>> = repository.allMemos.asLiveData()
 
+    fun memoById(rowId: Int):Memo = repository.select(rowId)
+
     fun insert(memo: Memo) = viewModelScope.launch { repository.insert(memo) }
 
 }
