@@ -5,12 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.choi.MemoDetailActivity
+import com.choi.takeoff.DeleteMemoFragment
+import com.choi.takeoff.MemoDetailActivity
 import com.choi.takeoff.R
 import com.choi.takeoff.db.entity.Memo
+
 
 class MemoListAdapter :
     ListAdapter<Memo, MemoListAdapter.MemoViewHolder>(MemosComparator()) {
@@ -34,6 +37,14 @@ class MemoListAdapter :
                     putExtra(MEMO_OBJECT_ID, memo?.rowid)
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }.run { itemView.context.startActivity(this) }
+            }
+
+            memoItemView.setOnLongClickListener {
+                val activity: AppCompatActivity = itemView.context as AppCompatActivity
+                val mFragment = DeleteMemoFragment()
+                mFragment.show(activity.supportFragmentManager, "confirm delete")
+
+                true
             }
         }
 
