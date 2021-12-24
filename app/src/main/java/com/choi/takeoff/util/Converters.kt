@@ -1,10 +1,13 @@
-package com.choi.takeoff.db.entity
+package com.choi.takeoff.util
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import java.io.ByteArrayOutputStream
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -37,4 +40,17 @@ class Converters {
 
     @TypeConverter
     fun jsonToList(value: String?) = Gson().fromJson(value, Array<String>::class.java)?.toList()
+
+    @TypeConverter
+    fun localDateTimeToString(value: LocalDateTime?): String = value.toString()
+
+    @TypeConverter
+    fun stringToLocalDateTime(value: String?): LocalDateTime? = LocalDateTime.parse(value,
+        DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+
+    @TypeConverter
+    fun uriToString(value: Uri?): String = value.toString()
+
+    @TypeConverter
+    fun stringToUri(value: String?): Uri = Uri.parse(value)
 }
