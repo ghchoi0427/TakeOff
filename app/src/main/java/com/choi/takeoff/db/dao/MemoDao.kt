@@ -24,4 +24,7 @@ interface MemoDao {
 
     @Query("SELECT *, rowid FROM memo WHERE rowid LIKE :search")
     fun findMemoWithId(search: Int): Memo
+
+    @Query("DELETE FROM memo WHERE rowid LIKE :search")
+    fun deleteMemoWithId(search: Int)
 }
