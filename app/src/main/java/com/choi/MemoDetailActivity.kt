@@ -22,11 +22,16 @@ class MemoDetailActivity : AppCompatActivity() {
         val binding = ActivityMemoDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val viewMemoContent = binding.memoContent
         val memoId: Int = intent.getIntExtra(MemoListAdapter.MEMO_OBJECT_ID, -1)
         val memo: Memo = newMemoViewModel.memoById(memoId)
 
-        binding.imageMemo.setImageURI(Uri.parse(memo.picture))
-        binding.textMemoDetailTime.text = memo.time
-        binding.textMemoDetailContent.text = memo.content
+        try {
+            viewMemoContent.imageMemo.setImageURI(Uri.parse(memo.picture))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        viewMemoContent.textMemoDetailTime.text = memo.time
+        viewMemoContent.textMemoDetailContent.text = memo.content
     }
 }
