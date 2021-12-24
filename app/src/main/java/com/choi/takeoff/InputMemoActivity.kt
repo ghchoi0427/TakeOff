@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.net.Uri
 import android.os.Bundle
-import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
 import com.choi.takeoff.databinding.ActivityInputMemoBinding
 
@@ -27,14 +26,10 @@ class InputMemoActivity : AppCompatActivity() {
         val buttonConfirm = binding.fabConfirmInput
         buttonConfirm.setOnClickListener {
             val replyIntent = Intent()
-            if (TextUtils.isEmpty(editText.text)) {
-                setResult(Activity.RESULT_CANCELED, replyIntent)
-            } else {
-                val content = editText.text.toString()
-                replyIntent.putExtra(EXTRA_REPLY, content)
-                    .putExtra(EXTRA_PICTURE, imageUri)
-                setResult(Activity.RESULT_OK, replyIntent)
-            }
+            val content = editText.text.toString()
+            replyIntent.putExtra(EXTRA_REPLY, content)
+                .putExtra(EXTRA_PICTURE, imageUri)
+            setResult(Activity.RESULT_OK, replyIntent)
             finish()
         }
 
