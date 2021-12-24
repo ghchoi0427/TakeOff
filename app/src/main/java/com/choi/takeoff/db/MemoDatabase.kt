@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.choi.takeoff.db.dao.MemoDao
-import com.choi.takeoff.db.entity.Converters
+import com.choi.takeoff.util.Converters
 import com.choi.takeoff.db.entity.Memo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
