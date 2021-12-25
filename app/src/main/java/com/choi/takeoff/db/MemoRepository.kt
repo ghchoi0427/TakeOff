@@ -19,4 +19,9 @@ class MemoRepository(private val memoDao: MemoDao) {
     fun select(rowId: Int): Memo {
         return memoDao.findMemoWithId(rowId)
     }
+
+    @WorkerThread
+    fun deleteWithId(rowId: Int) {
+        memoDao.deleteMemoWithId(rowId)
+    }
 }
