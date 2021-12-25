@@ -18,10 +18,11 @@ import com.choi.takeoff.R
 import com.choi.takeoff.adapter.MemoListAdapter
 import com.choi.takeoff.databinding.FragmentHomeBinding
 import com.choi.takeoff.db.entity.Memo
-import com.choi.takeoff.ui.newmemo.NewMemoViewModel
-import com.choi.takeoff.ui.newmemo.NewMemoViewModelFactory
+import com.choi.takeoff.ui.memo.NewMemoViewModel
+import com.choi.takeoff.ui.memo.NewMemoViewModelFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import kotlin.random.Random
 
 class HomeFragment : Fragment() {
@@ -84,7 +85,7 @@ class HomeFragment : Fragment() {
             val memo = Memo(Random.nextInt(0, 2147483647),
                 content,
                 imageUri,
-                LocalDateTime.now().toString(),
+                LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM월dd일 HH:mm")).toString(),
                 null,
                 null)
             //TODO: mood, tags 추가
