@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.choi.MemoDetailActivity">
+    tools:context=".MemoDetailActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
@@ -35,6 +35,6 @@
 
     <include
         android:id="@+id/memo_content"
-        layout="@layout/content_scrolling" />
+        layout="@layout/content_memo" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
