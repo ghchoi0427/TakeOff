@@ -1,4 +1,4 @@
-package com.choi.takeoff.ui.newmemo
+package com.choi.takeoff.ui.memo
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -8,10 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.choi.takeoff.R
 
-class NewMemoFragment : Fragment() {
+class MemoFragment : Fragment() {
 
     companion object {
-        fun newInstance() = NewMemoFragment()
+        fun newInstance() = MemoFragment()
     }
 
     private lateinit var viewModel: NewMemoViewModel
