@@ -31,7 +31,7 @@ class MemoListAdapter :
         private val memoItemView: TextView = itemView.findViewById(R.id.textView_recycler)
 
         fun bind(memo: Memo?) {
-            memoItemView.text = memo?.content.toString()
+            memoItemView.text = String.format("%s - %s", memo?.time, memo?.content)
             memoItemView.setOnClickListener {
                 Intent(itemView.context, MemoDetailActivity::class.java).apply {
                     putExtra(MEMO_OBJECT_ID, memo?.rowid)
@@ -41,8 +41,8 @@ class MemoListAdapter :
 
             memoItemView.setOnLongClickListener {
                 val activity: AppCompatActivity = itemView.context as AppCompatActivity
-                val mFragment = DeleteMemoFragment()
-                mFragment.show(activity.supportFragmentManager, "confirm delete")
+                val mFragment = memo?.rowid?.let { it1 -> DeleteMemoFragment(it1) }
+                mFragment?.show(activity.supportFragmentManager, "confirm delete")
 
                 true
             }
