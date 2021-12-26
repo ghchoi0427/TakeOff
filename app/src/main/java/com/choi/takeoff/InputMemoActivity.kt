@@ -6,14 +6,17 @@ import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.choi.takeoff.databinding.ActivityInputMemoBinding
 
 class InputMemoActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityInputMemoBinding
-    val SELECT_PICTURE = 200
-    var imageUri: String? = null
+    private val SELECT_PICTURE = 200
+    private var imageUri: String? = null
+    private val buttonDeletePicture by lazy { binding.buttonDeletePreviewImage }
+    private val imagePreview by lazy { binding.imagePreview }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +50,11 @@ class InputMemoActivity : AppCompatActivity() {
             i.action = Intent.ACTION_OPEN_DOCUMENT
             startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE)
         }
+
+        buttonDeletePicture.setOnClickListener {
+            imagePreview.visibility = View.GONE
+            imageUri = null
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -54,10 +62,11 @@ class InputMemoActivity : AppCompatActivity() {
 
         if (resultCode == RESULT_OK && requestCode == SELECT_PICTURE) {
             imageUri = data?.data.toString()
-            val imagePreview = binding.imagePreview
+            imagePreview.visibility = View.VISIBLE
             imagePreview.setImageURI(Uri.parse(imageUri))
 
             checkPermission(Uri.parse(imageUri))
+            buttonDeletePicture.visibility = View.VISIBLE
         }
     }
 
