@@ -48,6 +48,7 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        val fab = root.findViewById<FloatingActionButton>(R.id.fab_add)
         val recyclerView = root.findViewById<RecyclerView>(R.id.recyclerview_memo)
         val adapter = MemoListAdapter()
         recyclerView.adapter = adapter
@@ -59,7 +60,6 @@ class HomeFragment : Fragment() {
             }
         })
 
-        val fab = root.findViewById<FloatingActionButton>(R.id.fab_add)
         fab.setOnClickListener {
             val intent = Intent(activity, InputMemoActivity::class.java)
             startActivityForResult(intent, newMemoFragmentRequestCode)
@@ -72,23 +72,21 @@ class HomeFragment : Fragment() {
 
         var content: String? = ""
         var imageUri: String? = null
+        var mood: Int? = null
 
         if (requestCode == newMemoFragmentRequestCode && resultCode == Activity.RESULT_OK) {
-            data?.getStringExtra(InputMemoActivity.EXTRA_REPLY)?.let { reply ->
-                content = reply
-            }
-            data?.getStringExtra(InputMemoActivity.EXTRA_PICTURE)
-                ?.let { reply ->
-                    imageUri = reply
-                }
+            data?.getStringExtra(InputMemoActivity.EXTRA_REPLY)?.let { reply -> content = reply }
+            data?.getStringExtra(InputMemoActivity.EXTRA_PICTURE)?.let { reply -> imageUri = reply }
+            data?.getIntExtra(InputMemoActivity.EXTRA_MOOD, 50)?.let { reply -> mood = reply }
 
-            val memo = Memo(Random.nextInt(0, 2147483647),
+            val memo = Memo(
                 content,
                 imageUri,
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM월dd일 HH:mm")).toString(),
-                null,
-                null)
-            //TODO: mood, tags 추가
+                mood,
+                null
+            )
+            //TODO: tags 추가
             newMemoViewModel.insert(memo)
         } else {
             Toast.makeText(context, R.string.input_canceled, Toast.LENGTH_SHORT).show()
