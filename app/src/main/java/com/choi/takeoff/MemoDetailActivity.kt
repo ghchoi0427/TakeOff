@@ -38,5 +38,7 @@ class MemoDetailActivity : AppCompatActivity() {
         }
         viewMemoContent.textMemoDetailTime.text = memo.time
         viewMemoContent.textMemoDetailContent.text = memo.content
+        viewMemoContent.textMemoDetailMood.text = memo.mood.toString()
+        //TODO: indicate mood by something else than text
     }
 }
