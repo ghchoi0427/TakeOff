@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.choi.takeoff.databinding.ActivityInputMemoBinding
+import com.choi.takeoff.ui.mood.MoodFragment
 
 class InputMemoActivity : AppCompatActivity() {
 
@@ -17,6 +18,7 @@ class InputMemoActivity : AppCompatActivity() {
     private var imageUri: String? = null
     private val buttonDeletePicture by lazy { binding.buttonDeletePreviewImage }
     private val imagePreview by lazy { binding.imagePreview }
+    var mood: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,12 +30,19 @@ class InputMemoActivity : AppCompatActivity() {
 
         val buttonConfirm = binding.fabConfirmInput
         buttonConfirm.setOnClickListener {
+            val moodFragment = MoodFragment()
+            moodFragment.show(supportFragmentManager, "TAG_MOOD")
             val replyIntent = Intent()
             val content = editText.text.toString()
             replyIntent.putExtra(EXTRA_REPLY, content)
                 .putExtra(EXTRA_PICTURE, imageUri)
+                .putExtra(EXTRA_MOOD, mood)
             setResult(Activity.RESULT_OK, replyIntent)
-            finish()
+            when {
+                mood != null -> {
+                    finish()
+                }
+            }
         }
 
         val buttonCancel = binding.fabCancelInput
@@ -92,5 +101,6 @@ class InputMemoActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_REPLY = "com.choi.takeoff.memolistsql.REPLY"
         const val EXTRA_PICTURE = "com.choi.takeoff.memolistsql.PICTURE"
+        const val EXTRA_MOOD = "com.choi.takeoff.memolistsql.MOOD"
     }
 }
