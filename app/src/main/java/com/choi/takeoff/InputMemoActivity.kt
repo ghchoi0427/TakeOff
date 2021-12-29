@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.choi.takeoff.databinding.ActivityInputMemoBinding
 import com.choi.takeoff.ui.mood.MoodFragment
 import com.choi.takeoff.util.Converters
+import com.choi.takeoff.util.StorageManager
 
 class InputMemoActivity : AppCompatActivity() {
 
@@ -80,6 +81,7 @@ class InputMemoActivity : AppCompatActivity() {
             applicationContext.openFileOutput(imageFileName, Context.MODE_PRIVATE).use {
                 it.write(imageByteArray)
             }
+            StorageManager.writeFile(imageFileName, imageByteArray, applicationContext)
             imagePreview.setImageBitmap(imageByteArray?.let { Converters.byteArrayToBitmap(it) })
             imagePreview.visibility = View.VISIBLE
             buttonDeletePicture.visibility = View.VISIBLE
