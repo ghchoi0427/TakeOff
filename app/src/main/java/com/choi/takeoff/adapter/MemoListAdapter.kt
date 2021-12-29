@@ -4,6 +4,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DiffUtil
@@ -13,6 +14,8 @@ import com.choi.takeoff.DeleteMemoFragment
 import com.choi.takeoff.MemoDetailActivity
 import com.choi.takeoff.R
 import com.choi.takeoff.db.entity.Memo
+import com.choi.takeoff.util.Converters
+import com.choi.takeoff.util.StorageManager
 
 
 class MemoListAdapter :
@@ -28,18 +31,27 @@ class MemoListAdapter :
     }
 
     class MemoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val memoItemView: TextView = itemView.findViewById(R.id.textView_recycler)
+        val imageRecyclerItem: ImageView = itemView.findViewById(R.id.image_recycler_item)
+        val title: TextView = itemView.findViewById(R.id.text_recycler_title)
+        val time: TextView = itemView.findViewById(R.id.text_recycler_time)
 
         fun bind(memo: Memo?) {
-            memoItemView.text = String.format("%s - %s", memo?.time, memo?.content)
-            memoItemView.setOnClickListener {
+            memo?.picture?.let {
+                val bytes = StorageManager.readFile(it, itemView.context)
+                imageRecyclerItem.setImageBitmap(Converters.byteArrayToBitmap(bytes))
+            }
+
+            title.text = memo?.content
+            time.text = memo?.time
+
+            itemView.setOnClickListener {
                 Intent(itemView.context, MemoDetailActivity::class.java).apply {
                     putExtra(MEMO_OBJECT_ID, memo?.rowid)
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }.run { itemView.context.startActivity(this) }
             }
 
-            memoItemView.setOnLongClickListener {
+            itemView.setOnLongClickListener {
                 val activity: AppCompatActivity = itemView.context as AppCompatActivity
                 val mFragment = memo?.rowid?.let { it1 -> DeleteMemoFragment(it1) }
                 mFragment?.show(activity.supportFragmentManager, "confirm delete")
