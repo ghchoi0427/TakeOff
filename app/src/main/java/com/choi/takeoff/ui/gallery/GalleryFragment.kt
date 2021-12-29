@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.choi.takeoff.GlobalApplication
 import com.choi.takeoff.R
 import com.choi.takeoff.adapter.PhotoAdapter
@@ -40,8 +40,7 @@ class GalleryFragment : Fragment() {
         val adapter = PhotoAdapter()
         recyclerView.adapter = adapter
         recyclerView.layoutManager =
-            StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
-
+            GridLayoutManager(context, 2)
         newMemoViewModel.allMemos.observe(this.viewLifecycleOwner, { memos ->
             memos?.let {
                 adapter.submitList(it)
