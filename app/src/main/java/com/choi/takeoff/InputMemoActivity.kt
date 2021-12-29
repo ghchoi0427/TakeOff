@@ -1,6 +1,7 @@
 package com.choi.takeoff
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
@@ -10,15 +11,16 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.choi.takeoff.databinding.ActivityInputMemoBinding
 import com.choi.takeoff.ui.mood.MoodFragment
+import com.choi.takeoff.util.Converters
 
 class InputMemoActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityInputMemoBinding
     private val SELECT_PICTURE = 200
-    private var imageUri: String? = null
+    private var imageFileName: String? = null
     private val buttonDeletePicture by lazy { binding.buttonDeletePreviewImage }
     private val imagePreview by lazy { binding.imagePreview }
-    var mood: Int? = null
+    private var mood: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +37,7 @@ class InputMemoActivity : AppCompatActivity() {
             val replyIntent = Intent()
             val content = editText.text.toString()
             replyIntent.putExtra(EXTRA_REPLY, content)
-                .putExtra(EXTRA_PICTURE, imageUri)
+                .putExtra(EXTRA_PICTURE, imageFileName)
                 .putExtra(EXTRA_MOOD, mood)
             setResult(Activity.RESULT_OK, replyIntent)
             when {
@@ -56,13 +58,15 @@ class InputMemoActivity : AppCompatActivity() {
         buttonPicture.setOnClickListener {
             val i = Intent()
             i.type = "image/*"
-            i.action = Intent.ACTION_OPEN_DOCUMENT
+            i.action = Intent.ACTION_PICK
             startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE)
         }
 
         buttonDeletePicture.setOnClickListener {
             imagePreview.visibility = View.GONE
-            imageUri = null
+            applicationContext.openFileOutput(imageFileName, Context.MODE_PRIVATE).use {
+                it.write(null)
+            }
         }
     }
 
@@ -70,14 +74,19 @@ class InputMemoActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (resultCode == RESULT_OK && requestCode == SELECT_PICTURE) {
-            imageUri = data?.data.toString()
-            imagePreview.visibility = View.VISIBLE
-            imagePreview.setImageURI(Uri.parse(imageUri))
+            val imageByteArray = data?.data?.let { Converters.uriToByteArray(it, contentResolver) }
+            imageFileName = java.util.UUID.randomUUID().toString()
 
-            checkPermission(Uri.parse(imageUri))
+            applicationContext.openFileOutput(imageFileName, Context.MODE_PRIVATE).use {
+                it.write(imageByteArray)
+            }
+            imagePreview.setImageBitmap(imageByteArray?.let { Converters.byteArrayToBitmap(it) })
+            data?.data?.let { checkPermission(it) }
+            imagePreview.visibility = View.VISIBLE
             buttonDeletePicture.visibility = View.VISIBLE
         }
     }
+
 
     private fun checkPermission(uri: Uri) {
 
@@ -88,12 +97,16 @@ class InputMemoActivity : AppCompatActivity() {
             packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
         resInfoList.forEach {
             val packageName: String = it.activityInfo.packageName
-            applicationContext.grantUriPermission(packageName,
+            applicationContext.grantUriPermission(
+                packageName,
                 uri,
-                Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            applicationContext.grantUriPermission(packageName,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION
+            )
+            applicationContext.grantUriPermission(
+                packageName,
                 uri,
-                Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+                Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+            )
         }
 
     }
