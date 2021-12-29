@@ -20,7 +20,7 @@ class InputMemoActivity : AppCompatActivity() {
     private var imageFileName: String? = null
     private val buttonDeletePicture by lazy { binding.buttonDeletePreviewImage }
     private val imagePreview by lazy { binding.imagePreview }
-    private var mood: Int? = null
+    var mood: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
