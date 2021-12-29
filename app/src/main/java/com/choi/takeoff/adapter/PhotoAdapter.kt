@@ -1,6 +1,7 @@
 package com.choi.takeoff.adapter
 
 import android.content.Intent
+import android.media.ThumbnailUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,9 +33,14 @@ class PhotoAdapter :
             if (null == memo?.picture) {
                 return
             }
-            val byteRead: ByteArray = itemView.context.openFileInput(memo.picture).readBytes()
-            photoItemView.setImageBitmap(Converters.byteArrayToBitmap(byteRead))
-            //photoItemView.setImageURI(Uri.parse(memo?.picture))
+            //TODO: reduce resource when loading image
+            val byteRead: ByteArray = itemView.context.openFileInput(memo?.picture).readBytes()
+            val thumbnail = ThumbnailUtils.extractThumbnail(
+                Converters.byteArrayToReducedBitmap(byteRead, 4),
+                600,
+                600
+            )
+            photoItemView.setImageBitmap(thumbnail)
             photoItemView.setOnClickListener {
                 Intent(itemView.context, MemoDetailActivity::class.java).apply {
                     putExtra(MEMO_OBJECT_ID, memo?.rowid)
