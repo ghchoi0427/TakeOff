@@ -1,6 +1,5 @@
 package com.choi.takeoff
 
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -10,6 +9,7 @@ import com.choi.takeoff.databinding.ActivityMemoDetailBinding
 import com.choi.takeoff.db.entity.Memo
 import com.choi.takeoff.ui.memo.NewMemoViewModel
 import com.choi.takeoff.ui.memo.NewMemoViewModelFactory
+import com.choi.takeoff.util.Converters
 
 class MemoDetailActivity : AppCompatActivity() {
 
@@ -31,7 +31,8 @@ class MemoDetailActivity : AppCompatActivity() {
         } else {
             viewMemoContent.imageMemo.visibility = View.VISIBLE
             try {
-                viewMemoContent.imageMemo.setImageURI(Uri.parse(memo.picture))
+                val byteRead: ByteArray = applicationContext.openFileInput(memo.picture).readBytes()
+                viewMemoContent.imageMemo.setImageBitmap(Converters.byteArrayToBitmap(byteRead))
             } catch (e: Exception) {
                 e.printStackTrace()
             }
