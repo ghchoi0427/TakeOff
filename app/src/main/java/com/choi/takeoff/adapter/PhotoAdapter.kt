@@ -12,6 +12,7 @@ import com.choi.takeoff.MemoDetailActivity
 import com.choi.takeoff.R
 import com.choi.takeoff.db.entity.Memo
 import com.choi.takeoff.util.Converters
+import com.choi.takeoff.util.StorageManager
 
 
 class PhotoAdapter :
@@ -34,7 +35,7 @@ class PhotoAdapter :
                 return
             }
             //TODO: reduce resource when loading image
-            val byteRead: ByteArray = itemView.context.openFileInput(memo?.picture).readBytes()
+            val byteRead = StorageManager.readFile(memo?.picture, itemView.context)
             val thumbnail = ThumbnailUtils.extractThumbnail(
                 Converters.byteArrayToReducedBitmap(byteRead, 4),
                 600,
