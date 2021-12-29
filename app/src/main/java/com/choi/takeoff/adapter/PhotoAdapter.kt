@@ -1,7 +1,6 @@
 package com.choi.takeoff.adapter
 
 import android.content.Intent
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.choi.takeoff.MemoDetailActivity
 import com.choi.takeoff.R
 import com.choi.takeoff.db.entity.Memo
+import com.choi.takeoff.util.Converters
 
 
 class PhotoAdapter :
@@ -29,12 +29,12 @@ class PhotoAdapter :
         private val photoItemView: ImageView = itemView.findViewById(R.id.imageview_recycler)
 
         fun bind(memo: Memo?) {
-            try {
-                photoItemView.setImageURI(Uri.parse(memo?.picture))
-            } catch (e: Exception) {
-                e.printStackTrace()
+            if (null == memo?.picture) {
+                return
             }
-
+            val byteRead: ByteArray = itemView.context.openFileInput(memo.picture).readBytes()
+            photoItemView.setImageBitmap(Converters.byteArrayToBitmap(byteRead))
+            //photoItemView.setImageURI(Uri.parse(memo?.picture))
             photoItemView.setOnClickListener {
                 Intent(itemView.context, MemoDetailActivity::class.java).apply {
                     putExtra(MEMO_OBJECT_ID, memo?.rowid)
