@@ -58,7 +58,7 @@ class InputMemoActivity : AppCompatActivity() {
         buttonPicture.setOnClickListener {
             val i = Intent()
             i.type = "image/*"
-            i.action = Intent.ACTION_PICK
+            i.action = Intent.ACTION_GET_CONTENT
             startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE)
         }
 
@@ -81,7 +81,6 @@ class InputMemoActivity : AppCompatActivity() {
                 it.write(imageByteArray)
             }
             imagePreview.setImageBitmap(imageByteArray?.let { Converters.byteArrayToBitmap(it) })
-            data?.data?.let { checkPermission(it) }
             imagePreview.visibility = View.VISIBLE
             buttonDeletePicture.visibility = View.VISIBLE
         }
