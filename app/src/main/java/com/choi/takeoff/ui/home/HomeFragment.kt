@@ -52,7 +52,7 @@ class HomeFragment : Fragment() {
         val recyclerView = root.findViewById<RecyclerView>(R.id.recyclerview_memo)
         val adapter = MemoListAdapter()
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(activity)
+        recyclerView.layoutManager = LinearLayoutManager(activity).also { it.reverseLayout = true }
 
         newMemoViewModel.allMemos.observe(this.viewLifecycleOwner, { memos ->
             memos?.let {
