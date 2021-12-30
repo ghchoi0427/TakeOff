@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.choi.takeoff.GlobalApplication
 import com.choi.takeoff.R
-import com.choi.takeoff.adapter.PhotoAdapter
 import com.choi.takeoff.databinding.FragmentGalleryBinding
 import com.choi.takeoff.ui.memo.NewMemoViewModel
 import com.choi.takeoff.ui.memo.NewMemoViewModelFactory
@@ -37,7 +36,7 @@ class GalleryFragment : Fragment() {
         val root: View = binding.root
 
         val recyclerView = root.findViewById<RecyclerView>(R.id.recyclerview_photo)
-        val adapter = PhotoAdapter()
+        val adapter = GalleryAdapter()
         recyclerView.adapter = adapter
         recyclerView.layoutManager =
             GridLayoutManager(context, 2)
