@@ -16,9 +16,7 @@ class StorageManager {
         }
 
         fun deleteFile(filename: String?, context: Context) {
-            context.openFileOutput(filename, Context.MODE_PRIVATE).use {
-                it.write(null)
-            }
+            context.deleteFile(filename)
         }
 
     }
