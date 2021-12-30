@@ -38,7 +38,7 @@ class HomeAdapter :
         fun bind(memo: Memo?) {
             memo?.picture?.let {
                 val bytes = StorageManager.readFile(it, itemView.context)
-                imageRecyclerItem.setImageBitmap(Converters.byteArrayToBitmap(bytes))
+                imageRecyclerItem.setImageBitmap(Converters.byteArrayToReducedBitmap(bytes,4))
             }
 
             title.text = memo?.content
