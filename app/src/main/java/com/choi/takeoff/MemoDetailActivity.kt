@@ -1,15 +1,16 @@
 package com.choi.takeoff
 
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.choi.takeoff.adapter.MemoListAdapter
 import com.choi.takeoff.databinding.ActivityMemoDetailBinding
 import com.choi.takeoff.db.entity.Memo
+import com.choi.takeoff.ui.home.HomeAdapter
 import com.choi.takeoff.ui.memo.NewMemoViewModel
 import com.choi.takeoff.ui.memo.NewMemoViewModelFactory
 import com.choi.takeoff.util.Converters
+import com.choi.takeoff.util.StorageManager
 
 class MemoDetailActivity : AppCompatActivity() {
 
@@ -23,23 +24,25 @@ class MemoDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val viewMemoContent = binding.memoContent
-        val memoId: Int = intent.getIntExtra(MemoListAdapter.MEMO_OBJECT_ID, -1)
+        val memoId: Int = intent.getIntExtra(HomeAdapter.MEMO_OBJECT_ID, -1)
         val memo: Memo = newMemoViewModel.memoById(memoId)
+        binding.toolbarLayout.title = memo.time
 
-        if (memo.picture == null) {
-            viewMemoContent.imageMemo.visibility = View.GONE
+        if (memo.picture != null) {
+            binding.toolbarLayout.background = BitmapDrawable(
+                Converters.byteArrayToBitmap(
+                    StorageManager.readFile(
+                        memo.picture,
+                        applicationContext
+                    )
+                )
+            )
         } else {
-            viewMemoContent.imageMemo.visibility = View.VISIBLE
-            try {
-                val byteRead: ByteArray = applicationContext.openFileInput(memo.picture).readBytes()
-                viewMemoContent.imageMemo.setImageBitmap(Converters.byteArrayToBitmap(byteRead))
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+            binding.appBar.setLiftable(false)
         }
-        viewMemoContent.textMemoDetailTime.text = memo.time
+
         viewMemoContent.textMemoDetailContent.text = memo.content
         viewMemoContent.textMemoDetailMood.text = memo.mood.toString()
-        //TODO: indicate mood by something else than text
+        viewMemoContent.progressMood.progress = memo.mood!!
     }
 }
