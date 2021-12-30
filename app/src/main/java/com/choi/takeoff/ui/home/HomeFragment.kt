@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.choi.takeoff.GlobalApplication
 import com.choi.takeoff.InputMemoActivity
 import com.choi.takeoff.R
-import com.choi.takeoff.adapter.MemoListAdapter
 import com.choi.takeoff.databinding.FragmentHomeBinding
 import com.choi.takeoff.db.entity.Memo
 import com.choi.takeoff.ui.memo.NewMemoViewModel
@@ -23,7 +22,6 @@ import com.choi.takeoff.ui.memo.NewMemoViewModelFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import kotlin.random.Random
 
 class HomeFragment : Fragment() {
 
@@ -50,16 +48,17 @@ class HomeFragment : Fragment() {
 
         val fab = root.findViewById<FloatingActionButton>(R.id.fab_add)
         val recyclerView = root.findViewById<RecyclerView>(R.id.recyclerview_memo)
-        val adapter = MemoListAdapter()
+        val adapter = HomeAdapter()
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(activity).also { it.reverseLayout = true }
-
+        recyclerView.layoutManager = LinearLayoutManager(activity).also {
+            it.stackFromEnd = true
+            it.reverseLayout = true
+        }
         newMemoViewModel.allMemos.observe(this.viewLifecycleOwner, { memos ->
             memos?.let {
                 adapter.submitList(it)
             }
         })
-
         fab.setOnClickListener {
             val intent = Intent(activity, InputMemoActivity::class.java)
             startActivityForResult(intent, newMemoFragmentRequestCode)
