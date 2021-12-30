@@ -1,4 +1,4 @@
-package com.choi.takeoff.adapter
+package com.choi.takeoff.ui.home
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -18,8 +18,8 @@ import com.choi.takeoff.util.Converters
 import com.choi.takeoff.util.StorageManager
 
 
-class MemoListAdapter :
-    ListAdapter<Memo, MemoListAdapter.MemoViewHolder>(MemosComparator()) {
+class HomeAdapter :
+    ListAdapter<Memo, HomeAdapter.MemoViewHolder>(MemosComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MemoViewHolder {
         return MemoViewHolder.create(parent)

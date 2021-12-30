@@ -1,4 +1,4 @@
-package com.choi.takeoff.adapter
+package com.choi.takeoff.ui.gallery
 
 import android.content.Intent
 import android.media.ThumbnailUtils
@@ -11,12 +11,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.choi.takeoff.MemoDetailActivity
 import com.choi.takeoff.R
 import com.choi.takeoff.db.entity.Memo
+import com.choi.takeoff.ui.home.HomeAdapter
 import com.choi.takeoff.util.Converters
 import com.choi.takeoff.util.StorageManager
 
 
-class PhotoAdapter :
-    ListAdapter<Memo, PhotoAdapter.PhotoViewHolder>(MemoListAdapter.MemosComparator()) {
+class GalleryAdapter :
+    ListAdapter<Memo, GalleryAdapter.PhotoViewHolder>(HomeAdapter.MemosComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
         return PhotoViewHolder.create(parent)
