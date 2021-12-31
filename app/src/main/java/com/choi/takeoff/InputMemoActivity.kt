@@ -41,11 +41,6 @@ class InputMemoActivity : AppCompatActivity() {
                 .putExtra(EXTRA_PICTURE, imageFileName)
                 .putExtra(EXTRA_MOOD, mood)
             setResult(Activity.RESULT_OK, replyIntent)
-            when {
-                mood != null -> {
-                    finish()
-                }
-            }
         }
 
         val buttonCancel = binding.fabCancelInput
@@ -65,9 +60,7 @@ class InputMemoActivity : AppCompatActivity() {
 
         buttonDeletePicture.setOnClickListener {
             imagePreview.visibility = View.GONE
-            applicationContext.openFileOutput(imageFileName, Context.MODE_PRIVATE).use {
-                it.write(null)
-            }
+            StorageManager.deleteFile(imageFileName, applicationContext)
         }
     }
 
