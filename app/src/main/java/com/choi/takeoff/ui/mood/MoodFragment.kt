@@ -48,6 +48,7 @@ class MoodFragment : DialogFragment() {
         val buttonSubmit = binding.buttonSubmit
         buttonSubmit.setOnClickListener {
             dismiss()
+            (activity as InputMemoActivity).finish()
         }
         return binding.root
     }
