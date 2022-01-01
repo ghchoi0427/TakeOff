@@ -16,7 +16,11 @@ class StorageManager {
         }
 
         fun deleteFile(filename: String?, context: Context) {
-            context.deleteFile(filename)
+            try {
+                context.deleteFile(filename)
+            } catch (e: NullPointerException) {
+                e.printStackTrace()
+            }
         }
 
     }
