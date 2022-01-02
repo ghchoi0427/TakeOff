@@ -8,17 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.choi.takeoff.GlobalApplication
 import com.choi.takeoff.InputMemoActivity
+import com.choi.takeoff.MainActivity
 import com.choi.takeoff.R
 import com.choi.takeoff.databinding.FragmentHomeBinding
 import com.choi.takeoff.db.entity.Memo
-import com.choi.takeoff.ui.memo.NewMemoViewModel
-import com.choi.takeoff.ui.memo.NewMemoViewModelFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -26,9 +23,7 @@ import java.time.format.DateTimeFormatter
 class HomeFragment : Fragment() {
 
     private val newMemoFragmentRequestCode = 1
-    private val newMemoViewModel: NewMemoViewModel by viewModels {
-        NewMemoViewModelFactory((activity?.application as GlobalApplication).repository)
-    }
+    private val newMemoViewModel = (activity as MainActivity).newMemoViewModel
 
     private lateinit var homeViewModel: HomeViewModel
     private var _binding: FragmentHomeBinding? = null

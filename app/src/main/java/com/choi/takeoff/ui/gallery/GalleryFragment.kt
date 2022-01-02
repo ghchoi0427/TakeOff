@@ -5,20 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.choi.takeoff.GlobalApplication
+import com.choi.takeoff.MainActivity
 import com.choi.takeoff.R
 import com.choi.takeoff.databinding.FragmentGalleryBinding
-import com.choi.takeoff.ui.memo.NewMemoViewModel
-import com.choi.takeoff.ui.memo.NewMemoViewModelFactory
 
 class GalleryFragment : Fragment() {
-    private val newMemoViewModel: NewMemoViewModel by viewModels {
-        NewMemoViewModelFactory((activity?.application as GlobalApplication).repository)
-    }
+    private val newMemoViewModel = (activity as MainActivity).newMemoViewModel
     private lateinit var galleryViewModel: GalleryViewModel
     private var _binding: FragmentGalleryBinding? = null
 
