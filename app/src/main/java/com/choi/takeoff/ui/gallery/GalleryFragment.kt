@@ -11,9 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.choi.takeoff.MainActivity
 import com.choi.takeoff.R
 import com.choi.takeoff.databinding.FragmentGalleryBinding
+import com.choi.takeoff.ui.memo.MemoViewModel
 
 class GalleryFragment : Fragment() {
-    private val newMemoViewModel = (activity as MainActivity).newMemoViewModel
+    private lateinit var memoViewModel: MemoViewModel
     private lateinit var galleryViewModel: GalleryViewModel
     private var _binding: FragmentGalleryBinding? = null
 
@@ -30,12 +31,14 @@ class GalleryFragment : Fragment() {
         _binding = FragmentGalleryBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        memoViewModel = (activity as MainActivity).memoViewModel
+
         val recyclerView = root.findViewById<RecyclerView>(R.id.recyclerview_photo)
         val adapter = GalleryAdapter()
         recyclerView.adapter = adapter
         recyclerView.layoutManager =
             GridLayoutManager(context, 2)
-        newMemoViewModel.allMemos.observe(this.viewLifecycleOwner, { memos ->
+        memoViewModel.allMemos.observe(this.viewLifecycleOwner, { memos ->
             memos?.let {
                 adapter.submitList(it)
             }

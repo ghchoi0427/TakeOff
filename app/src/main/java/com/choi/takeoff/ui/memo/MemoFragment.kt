@@ -14,7 +14,7 @@ class MemoFragment : Fragment() {
         fun newInstance() = MemoFragment()
     }
 
-    private lateinit var viewModel: NewMemoViewModel
+    private lateinit var viewModel: MemoViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,7 +25,7 @@ class MemoFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(NewMemoViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MemoViewModel::class.java)
         // TODO: Use the ViewModel
     }
 

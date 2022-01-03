@@ -7,14 +7,14 @@ import androidx.appcompat.app.AppCompatActivity
 import com.choi.takeoff.databinding.ActivityMemoDetailBinding
 import com.choi.takeoff.db.entity.Memo
 import com.choi.takeoff.ui.home.HomeAdapter
-import com.choi.takeoff.ui.memo.NewMemoViewModel
+import com.choi.takeoff.ui.memo.MemoViewModel
 import com.choi.takeoff.ui.memo.NewMemoViewModelFactory
 import com.choi.takeoff.util.Converters
 import com.choi.takeoff.util.StorageManager
 
 class MemoDetailActivity : AppCompatActivity() {
 
-    private val newMemoViewModel: NewMemoViewModel by viewModels {
+    private val memoViewModel: MemoViewModel by viewModels {
         NewMemoViewModelFactory((application as GlobalApplication).repository)
     }
 
@@ -25,7 +25,7 @@ class MemoDetailActivity : AppCompatActivity() {
 
         val viewMemoContent = binding.memoContent
         val memoId: Int = intent.getIntExtra(HomeAdapter.MEMO_OBJECT_ID, -1)
-        val memo: Memo = newMemoViewModel.memoById(memoId)
+        val memo: Memo = memoViewModel.memoById(memoId)
         binding.toolbarLayout.title = memo.time
 
         if (memo.picture != null) {

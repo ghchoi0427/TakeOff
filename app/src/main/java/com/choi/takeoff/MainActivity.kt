@@ -9,13 +9,13 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.choi.takeoff.databinding.ActivityMainBinding
-import com.choi.takeoff.ui.memo.NewMemoViewModel
+import com.choi.takeoff.ui.memo.MemoViewModel
 import com.choi.takeoff.ui.memo.NewMemoViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
-    val newMemoViewModel: NewMemoViewModel by viewModels {
+    val memoViewModel: MemoViewModel by viewModels {
         NewMemoViewModelFactory((application as GlobalApplication).repository)
     }
 

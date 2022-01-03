@@ -6,7 +6,7 @@ import com.choi.takeoff.db.entity.Memo
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
-class NewMemoViewModel(private val repository: MemoRepository) : ViewModel() {
+class MemoViewModel(private val repository: MemoRepository) : ViewModel() {
 
     val allMemos: LiveData<List<Memo>> = repository.allMemos.asLiveData()
 
@@ -20,9 +20,9 @@ class NewMemoViewModel(private val repository: MemoRepository) : ViewModel() {
 
 class NewMemoViewModelFactory(private val repository: MemoRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(NewMemoViewModel::class.java)) {
+        if (modelClass.isAssignableFrom(MemoViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return NewMemoViewModel(repository) as T
+            return MemoViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel Class")
     }
