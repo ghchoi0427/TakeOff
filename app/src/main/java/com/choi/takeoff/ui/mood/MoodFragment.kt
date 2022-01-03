@@ -17,7 +17,6 @@ import com.choi.takeoff.databinding.MoodFragmentBinding
 class MoodFragment : DialogFragment() {
 
     lateinit var size: Point
-    var currentProgress: Int? = null
 
     companion object {
         fun newInstance() = MoodFragment()
@@ -47,6 +46,7 @@ class MoodFragment : DialogFragment() {
         })
         val buttonSubmit = binding.buttonSubmit
         buttonSubmit.setOnClickListener {
+            viewModel.progress.value?.let { it1 -> (activity as InputMemoActivity).reply(it1) }
             dismiss()
             (activity as InputMemoActivity).finish()
         }
@@ -79,7 +79,6 @@ class MoodFragment : DialogFragment() {
     inner class SeekBarListener : OnSeekBarChangeListener {
         override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
             viewModel.setProgress(p1)
-            (activity as InputMemoActivity).mood = p1
         }
 
         override fun onStartTrackingTouch(p0: SeekBar?) {

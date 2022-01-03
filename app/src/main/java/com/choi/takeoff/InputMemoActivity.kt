@@ -29,18 +29,10 @@ class InputMemoActivity : AppCompatActivity() {
         binding = ActivityInputMemoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val editText = binding.edtMemoContent
-
         val buttonConfirm = binding.fabConfirmInput
         buttonConfirm.setOnClickListener {
             val moodFragment = MoodFragment()
             moodFragment.show(supportFragmentManager, "TAG_MOOD")
-            val replyIntent = Intent()
-            val content = editText.text.toString()
-            replyIntent.putExtra(EXTRA_REPLY, content)
-                .putExtra(EXTRA_PICTURE, imageFileName)
-                .putExtra(EXTRA_MOOD, mood)
-            setResult(Activity.RESULT_OK, replyIntent)
         }
 
         val buttonCancel = binding.fabCancelInput
@@ -62,6 +54,17 @@ class InputMemoActivity : AppCompatActivity() {
             imagePreview.visibility = View.GONE
             StorageManager.deleteFile(imageFileName, applicationContext)
         }
+    }
+
+    fun reply(mood: Int) {
+        val replyIntent = Intent()
+        val editText = binding.edtMemoContent
+        val content = editText.text.toString()
+
+        replyIntent.putExtra(EXTRA_REPLY, content)
+            .putExtra(EXTRA_PICTURE, imageFileName)
+            .putExtra(EXTRA_MOOD, mood)
+        setResult(Activity.RESULT_OK, replyIntent)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
