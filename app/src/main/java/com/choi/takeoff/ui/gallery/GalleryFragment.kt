@@ -12,6 +12,7 @@ import com.choi.takeoff.MainActivity
 import com.choi.takeoff.R
 import com.choi.takeoff.databinding.FragmentGalleryBinding
 import com.choi.takeoff.ui.memo.MemoViewModel
+import kotlin.streams.toList
 
 class GalleryFragment : Fragment() {
     private lateinit var memoViewModel: MemoViewModel
@@ -39,7 +40,7 @@ class GalleryFragment : Fragment() {
         recyclerView.layoutManager =
             GridLayoutManager(context, 2)
         memoViewModel.allMemos.observe(this.viewLifecycleOwner, { memos ->
-            memos?.let {
+            memos.stream().filter { it.picture != null }.toList().let {
                 adapter.submitList(it)
             }
         })
