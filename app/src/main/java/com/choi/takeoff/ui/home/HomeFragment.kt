@@ -16,14 +16,14 @@ import com.choi.takeoff.MainActivity
 import com.choi.takeoff.R
 import com.choi.takeoff.databinding.FragmentHomeBinding
 import com.choi.takeoff.db.entity.Memo
+import com.choi.takeoff.ui.memo.MemoViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import java.sql.Timestamp
 
 class HomeFragment : Fragment() {
 
     private val newMemoFragmentRequestCode = 1
-    private val newMemoViewModel = (activity as MainActivity).newMemoViewModel
+    private lateinit var memoViewModel: MemoViewModel
 
     private lateinit var homeViewModel: HomeViewModel
     private var _binding: FragmentHomeBinding? = null
@@ -38,6 +38,7 @@ class HomeFragment : Fragment() {
         homeViewModel =
             ViewModelProvider(this)[HomeViewModel::class.java]
 
+        memoViewModel = (activity as MainActivity).memoViewModel
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
@@ -49,7 +50,7 @@ class HomeFragment : Fragment() {
             it.stackFromEnd = true
             it.reverseLayout = true
         }
-        newMemoViewModel.allMemos.observe(this.viewLifecycleOwner, { memos ->
+        memoViewModel.allMemos.observe(this.viewLifecycleOwner, { memos ->
             memos?.let {
                 adapter.submitList(it)
             }
@@ -71,17 +72,17 @@ class HomeFragment : Fragment() {
         if (requestCode == newMemoFragmentRequestCode && resultCode == Activity.RESULT_OK) {
             data?.getStringExtra(InputMemoActivity.EXTRA_REPLY)?.let { reply -> content = reply }
             data?.getStringExtra(InputMemoActivity.EXTRA_PICTURE)?.let { reply -> imageUri = reply }
-            data?.getIntExtra(InputMemoActivity.EXTRA_MOOD, 50)?.let { reply -> mood = reply }
+            data?.getIntExtra(InputMemoActivity.EXTRA_MOOD, -1)?.let { reply -> mood = reply }
 
             val memo = Memo(
                 content,
                 imageUri,
-                LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM월dd일 HH:mm")).toString(),
+                Timestamp(System.currentTimeMillis()).toString(),
                 mood,
                 null
             )
             //TODO: tags 추가
-            newMemoViewModel.insert(memo)
+            memoViewModel.insert(memo)
         } else {
             Toast.makeText(context, R.string.input_canceled, Toast.LENGTH_SHORT).show()
         }
