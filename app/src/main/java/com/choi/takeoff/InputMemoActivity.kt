@@ -52,7 +52,9 @@ class InputMemoActivity : AppCompatActivity() {
 
         buttonDeletePicture.setOnClickListener {
             imagePreview.visibility = View.GONE
+            buttonDeletePicture.visibility = View.GONE
             StorageManager.deleteFile(imageFileName, applicationContext)
+            imageFileName = null
         }
     }
 
