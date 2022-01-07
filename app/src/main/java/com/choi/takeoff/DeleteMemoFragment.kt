@@ -5,13 +5,13 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
-import com.choi.takeoff.ui.memo.NewMemoViewModel
+import com.choi.takeoff.ui.memo.MemoViewModel
 import com.choi.takeoff.ui.memo.NewMemoViewModelFactory
 import com.choi.takeoff.util.StorageManager
 
 class DeleteMemoFragment(private val rowId: Int) : DialogFragment() {
 
-    private val newMemoViewModel: NewMemoViewModel by viewModels {
+    private val memoViewModel: MemoViewModel by viewModels {
         NewMemoViewModelFactory((activity?.application as GlobalApplication).repository)
     }
 
@@ -22,11 +22,11 @@ class DeleteMemoFragment(private val rowId: Int) : DialogFragment() {
                 .setPositiveButton(R.string.confirm) { dialog, id ->
                     context?.let { context ->
                         StorageManager.deleteFile(
-                            newMemoViewModel.memoById(rowId).picture,
+                            memoViewModel.memoById(rowId).picture,
                             context
                         )
                     }
-                    newMemoViewModel.deleteMemoById(rowId)
+                    memoViewModel.deleteMemoById(rowId)
                 }
                 .setNegativeButton(R.string.cancel) { dialog, id ->
                 }
