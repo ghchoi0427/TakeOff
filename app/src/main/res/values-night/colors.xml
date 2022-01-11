@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="recycler_item_background">#0B2A7E</color>
+    <color name="color_edit_memo_background">#FFAB00</color>
 </resources>
