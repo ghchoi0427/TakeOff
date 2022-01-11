@@ -7,67 +7,65 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_memo_detail">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         android:orientation="vertical"
         tools:context=".MemoDetailActivity">
-
-        <ImageView
-            android:id="@+id/image_memo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="@dimen/activity_vertical_margin"
-            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-            android:adjustViewBounds="true"
-            android:maxHeight="500dp"
-            android:maxWidth="400dp"
-            android:visibility="gone" />
-
-        <View
-            android:id="@+id/line_1"
-            android:layout_width="match_parent"
-            android:layout_height="2px"
-            android:background="@color/cardview_shadow_end_color" />
-
-
-        <TextView
-            android:id="@+id/text_memo_detail_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-            android:textSize="12sp"
-            tools:text="time" />
-
-        <View
-            android:id="@+id/line_2"
-            android:layout_width="match_parent"
-            android:layout_height="2px"
-            android:background="@color/cardview_shadow_end_color" />
 
         <TextView
             android:id="@+id/text_memo_detail_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-            android:layout_marginVertical="@dimen/activity_vertical_margin"
+            android:layout_height="match_parent"
+            android:paddingVertical="20dp"
+            android:minHeight="300dp"
             android:textSize="25sp"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="content" />
 
         <View
             android:id="@+id/line_3"
             android:layout_width="match_parent"
-            android:layout_height="2px"
-            android:background="@color/cardview_shadow_end_color" />
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/grey"
+            app:layout_constraintTop_toBottomOf="@id/text_memo_detail_content" />
+
+        <TextView
+            android:id="@+id/text_memo_detail_mood"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/line_3"
+            tools:text="56" />
+
+        <ProgressBar
+            android:id="@+id/progress_mood"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toEndOf="@id/text_memo_detail_mood"
+            app:layout_constraintTop_toBottomOf="@id/line_3" />
+
+        <View
+            android:id="@+id/line_4"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/grey"
+            app:layout_constraintTop_toBottomOf="@id/progress_mood" />
 
         <TextView
             android:id="@+id/text_memo_detail_tags"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/line_4"
             tools:text="tags" />
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.core.widget.NestedScrollView>
