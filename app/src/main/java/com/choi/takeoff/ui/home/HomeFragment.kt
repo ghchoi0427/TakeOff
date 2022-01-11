@@ -66,17 +66,17 @@ class HomeFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
 
         var content: String? = ""
-        var imageUri: String? = null
+        var imageFileName: String? = null
         var mood: Int? = null
 
         if (requestCode == newMemoFragmentRequestCode && resultCode == Activity.RESULT_OK) {
             data?.getStringExtra(InputMemoActivity.EXTRA_REPLY)?.let { reply -> content = reply }
-            data?.getStringExtra(InputMemoActivity.EXTRA_PICTURE)?.let { reply -> imageUri = reply }
+            data?.getStringExtra(InputMemoActivity.EXTRA_PICTURE)?.let { reply -> imageFileName = reply }
             data?.getIntExtra(InputMemoActivity.EXTRA_MOOD, -1)?.let { reply -> mood = reply }
 
             val memo = Memo(
                 content,
-                imageUri,
+                imageFileName,
                 Timestamp(System.currentTimeMillis()).toString(),
                 mood,
                 null
