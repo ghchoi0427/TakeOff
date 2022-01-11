@@ -18,6 +18,7 @@ class GalleryFragment : Fragment() {
     private lateinit var memoViewModel: MemoViewModel
     private lateinit var galleryViewModel: GalleryViewModel
     private var _binding: FragmentGalleryBinding? = null
+    private var spanCount = 2
 
     private val binding get() = _binding!!
 
@@ -38,7 +39,7 @@ class GalleryFragment : Fragment() {
         val adapter = GalleryAdapter()
         recyclerView.adapter = adapter
         recyclerView.layoutManager =
-            GridLayoutManager(context, 2)
+            GridLayoutManager(context, spanCount)
         memoViewModel.allMemos.observe(this.viewLifecycleOwner, { memos ->
             memos.stream().filter { it.picture != null }.toList().let {
                 adapter.submitList(it)
